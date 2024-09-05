@@ -45,38 +45,44 @@
             </ul>
         </div>
     </nav>
-
-    <main>
-        <h1 class="bold">Timer</h1>
-        <div class="display-timer">
-            <span id="time" class="bold">
-                <span class="hours number-time font-digit">00</span>h
-                <span class="minutes number-time font-digit">:00</span>m
-                <span class="seconds number-time font-digit">:00</span>s
-            </span>
-        </div>
-        <div class="buttons">
-            <button class="main-timer-button" id="resume-button" type="button" onclick="resumeSwitch()">Start</button>
-            <button class="main-timer-button" type="button" onclick="reset()">Reset</button>
-            <button class="main-timer-button" type="button" onclick="flag()">Flag</button>
-            <button class="main-timer-button" type="button" onclick="save()">Save</button>
-            <button class="main-timer-button" type="button" onclick="load()">Load</button>
-        </div>
-        <div class="inputs">
-            <input type="time" step="1" value="00:00:00" name="" id="set-time-input">
-            <button class="main-timer-button" type="button" onclick="editTimer('set')">Set Timer</button>
-            <button class="main-timer-button" type="button" onclick="editTimer('add')">Add to Timer</button>
-        </div>
-        <h3 class="bold">Current Iteration Timer</h3>
-        <div id="display-last-flag" class="display-timer">
-            <span id="time-last-flag" class="bold">
-                <span class="hours flag number-time font-digit">00</span>h
-                <span class="minutes flag number-time font-digit">:00</span>m
-                <span class="seconds flag number-time font-digit">:00</span>s
-            </span>
-        </div>
-        <div id="flags"></div>
-    </main>
+    <div id="body-content">
+        <main class="section-content">
+            <h1 class="bold">Timer</h1>
+            <div class="display-timer">
+                <span id="time" class="bold">
+                    <span class="hours number-time font-digit">00</span>h
+                    <span class="minutes number-time font-digit">:00</span>m
+                    <span class="seconds number-time font-digit">:00</span>s
+                </span>
+            </div>
+            <div class="buttons">
+                <button class="main-timer-button" id="resume-button" type="button"
+                    onclick="resumeSwitch()">Start</button>
+                <button class="main-timer-button" type="button" onclick="reset()">Reset</button>
+                <button class="main-timer-button" type="button" onclick="flag()">Flag</button>
+            </div>
+            <div class="buttons">
+                <button class="main-timer-button" type="button" onclick="save()">Save</button>
+                <button class="main-timer-button" type="button" onclick="load()">Load</button>
+            </div>
+            <div class="inputs">
+                <input type="time" step="1" value="00:00:00" name="" id="set-time-input">
+                <button class="main-timer-button" type="button" onclick="editTimer('set')">Set Timer</button>
+                <button class="main-timer-button" type="button" onclick="editTimer('add')">Add to Timer</button>
+            </div>
+        </main>
+        <section class="section-content">
+            <h3 class="bold">Current Iteration Timer</h3>
+            <div id="display-last-flag" class="display-timer">
+                <span id="time-last-flag" class="bold">
+                    <span class="hours flag number-time font-digit">00</span>h
+                    <span class="minutes flag number-time font-digit">:00</span>m
+                    <span class="seconds flag number-time font-digit">:00</span>s
+                </span>
+            </div>
+            <div id="flags"></div>
+        </section>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
