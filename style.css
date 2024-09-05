@@ -1,0 +1,145 @@
+@font-face {
+    font-family: "Digitalis";
+    src: url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.eot");
+    src: url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.svg#Digitalis")format("svg");
+}
+
+@font-face {
+    font-family: clockicons;
+    src: url(assets/ds_digital/DS-DIGI.TTF) format("truetype");
+    font-weight: 400;
+    font-style: normal
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: whitesmoke;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main > * {
+    margin: 1rem;
+}
+
+button {
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+
+    color: #fff;
+    background-color: #333;
+    border: 0.25rem outset #fff;
+}
+
+button:hover {
+    color: #333;
+    background-color: #ccc;
+    transition-duration: 300ms;
+}
+
+button:active {
+    border: 0.25rem inset #fff;
+}
+
+.main-timer-button {
+    min-width: 6rem;
+}
+
+.display-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 20rem;
+    padding: 0 1rem;
+    background-color: black;
+    border: .5rem double rgb(100, 100, 100);
+    border-radius: 1rem;
+}
+
+.flag.number-time {
+    font-size: 2rem;
+}
+
+#display-last-flag {
+    width: 15rem;
+    background-color: #555;
+    border-color: #aaa;
+}
+
+#display-last-flag > * {
+    font-size: 1rem;
+}
+
+.display-timer > * {
+    color: #b3d8f5;
+}
+
+.font-digit {
+    font-family: clockicons, Digitalis, sans-serif;
+}
+
+.number-time {
+    font-size: 3rem;
+}
+
+#time {
+    font-size: 1.5rem;
+}
+
+.flags-pairs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 15rem;
+    margin: 0.5rem 0.25rem;
+}
+
+.flags > .number-time {
+    font-size: 1.5rem;
+}
+
+.flags {
+    font-size: .75rem;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
+
+#flags {
+    width: 60vw;
+    height: 10rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #ddd;
+    border-radius: 2rem;
+    overflow-y: auto;
+}
+
+#flags > * {
+    color: rgb(58, 58, 58);
+}
