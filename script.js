@@ -18,55 +18,34 @@ class TimeState {
     this.extraHours = extraHours;
   }
 
-  add(seconds) {
-    this.seconds += seconds;
+  _order() {
     this.minutes += parseInt(this.seconds / 60);
     this.seconds %= 60;
 
     this.hours += parseInt(this.minutes / 60);
     this.minutes %= 60;
+  }
 
-    if (this.hours >= 100) this.extraHours += this.hours - 99;
-
-    this.hours %= 100;
-
-    return this;
+  add(seconds) {
+    this.seconds += seconds;
+    return this._order();
   }
 
   addObj(timeState) {
-    let seconds = timeState.seconds;
-    let minutes = timeState.minutes;
-    let hours = timeState.hours;
 
-    minutes += parseInt(seconds / 60);
-    seconds %= 60;
+    this.seconds += timeState.seconds;
+    this.minutes += timeState.minutes;
+    this.hours += timeState.hours;
 
-    hours += parseInt(minutes / 60);
-    minutes %= 60;
-
-    this.hours += hours;
-    this.minutes += minutes;
-    this.seconds += seconds;
-
-    return this;
+    return this._order();
   }
 
   remove(timeState) {
-    let seconds = timeState.seconds;
-    let minutes = timeState.minutes;
-    let hours = timeState.hours;
+    this.hours -= timeState.hours;
+    this.minutes -= timeState.minutes;
+    this.seconds -= timeState.seconds;
 
-    minutes += parseInt(seconds / 60);
-    seconds %= 60;
-
-    hours += parseInt(minutes / 60);
-    minutes %= 60;
-
-    this.hours -= hours;
-    this.minutes -= minutes;
-    this.seconds -= seconds;
-
-    return this;
+    return this._order();
   }
 
   reset() {
