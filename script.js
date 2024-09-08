@@ -2,23 +2,24 @@ class TimeState {
   hours;
   minutes;
   seconds;
+  milliseconds;
 
-  extraHours = 0;
-
-  constructor(hoursOrObj = 0, minutes = 0, seconds = 0, extraHours = 0) {
-    if (typeof hoursOrObj == "object") {
-      extraHours = hoursOrObj.extraHours;
-      seconds = hoursOrObj.seconds;
-      minutes = hoursOrObj.minutes;
-      hoursOrObj = hoursOrObj.hours;
-    }
-    this.hours = hoursOrObj;
-    this.minutes = minutes;
+  constructor(milliseconds = 0, seconds = 0, minutes = 0, hours = 0) {
+    this.milliseconds = milliseconds;
     this.seconds = seconds;
-    this.extraHours = extraHours;
+    this.minutes = minutes;
+    this.hours = hours;
+    this._order();
+  }
+
+  static newByObj(obj) {
+    return new TimeState(obj.milliseconds, obj.seconds, obj.minutes, obj.hours);
   }
 
   _order() {
+    this.seconds += parseInt(this.milliseconds / 1000);
+    this.milliseconds %= 1000;
+
     this.minutes += parseInt(this.seconds / 60);
     this.seconds %= 60;
 
@@ -26,32 +27,46 @@ class TimeState {
     this.minutes %= 60;
   }
 
-  add(seconds) {
+  add(milliseconds = 0, seconds = 0, minutes = 0, hours = 0) {
+    this.milliseconds += milliseconds;
     this.seconds += seconds;
+    this.minutes += minutes;
+    this.hours += hours;
     return this._order();
   }
 
-  addObj(timeState) {
+  addByObj(timeState) {
+    return this.add(
+      timeState.milliseconds,
+      timeState.seconds,
+      timeState.minutes,
+      timeState.hours
+    );
+  }
 
-    this.seconds += timeState.seconds;
-    this.minutes += timeState.minutes;
-    this.hours += timeState.hours;
+  remove(milliseconds = 0, seconds = 0, minutes = 0, hours = 0) {
+    this.milliseconds -= milliseconds;
+    this.seconds -= seconds;
+    this.minutes -= minutes;
+    this.hours -= hours;
 
     return this._order();
   }
 
-  remove(timeState) {
-    this.hours -= timeState.hours;
-    this.minutes -= timeState.minutes;
-    this.seconds -= timeState.seconds;
-
-    return this._order();
+  removeByObj(timeState) {
+    return this.remove(
+      timeState.milliseconds,
+      timeState.seconds,
+      timeState.minutes,
+      timeState.hours
+    );
   }
 
   reset() {
-    this.hours = 0;
-    this.minutes = 0;
+    this.milliseconds = 0;
     this.seconds = 0;
+    this.minutes = 0;
+    this.hours = 0;
   }
 
   static max(time1, time2) {
@@ -59,7 +74,9 @@ class TimeState {
       return time1.hours > time2.hours ? time1 : time2;
     if (time1.minutes != time2.minutes)
       return time1.minutes > time2.minutes ? time1 : time2;
-    return time1.seconds >= time2.seconds ? time1 : time2;
+    if (time1.seconds != time2.seconds)
+      return time1.seconds > time2.seconds ? time1 : time2;
+    return time1.milliseconds >= time2.milliseconds ? time1 : time2;
   }
 
   static min(time1, time2) {
@@ -67,23 +84,28 @@ class TimeState {
       return time1.hours < time2.hours ? time1 : time2;
     if (time1.minutes != time2.minutes)
       return time1.minutes < time2.minutes ? time1 : time2;
-    return time1.seconds <= time2.seconds ? time1 : time2;
+    if (time1.seconds != time2.seconds)
+      return time1.seconds < time2.seconds ? time1 : time2;
+    return time1.milliseconds <= time2.milliseconds ? time1 : time2;
   }
 
   copy() {
-    return new TimeState(this.hours, this.minutes, this.seconds);
+    return TimeState.newByObj(this);
   }
 }
 
 const display = document.querySelector("#time");
 const displayFlag = document.querySelector("#time-last-flag");
+let lastDateTime;
 let time = new TimeState();
 let timeFlag = new TimeState();
 let timeFlags = [];
+let doWarns = true;
 
 let timerInterval = null;
 
 function shineDisplay(originalColor, color = "#ffd", elem = display) {
+  console.log("shining ", elem);
   if (!originalColor)
     originalColor = getComputedStyle(elem).getPropertyValue("color");
   const originalTransition =
@@ -99,52 +121,66 @@ function shineDisplay(originalColor, color = "#ffd", elem = display) {
   elem.style.transitionDuration = originalTransition;
 }
 
+function shineAllDisplay(color = "#ffd", originalColor) {
+  const displays = document.querySelectorAll(".timer-text");
+  displays.forEach((display) => shineDisplay(color, originalColor, display));
+}
+
 function updateDisplay(elem = display, timeState = time) {
   elem.childNodes[1].textContent = String(timeState.hours).padStart(2, "0");
   elem.childNodes[3].textContent =
     ":" + String(timeState.minutes).padStart(2, "0");
   elem.childNodes[5].textContent =
     ":" + String(timeState.seconds).padStart(2, "0");
+  elem.childNodes[7].textContent =
+    ":" + String(parseInt(timeState.milliseconds / 10)).padStart(2, "0");
 }
 
-function addSecond() {
-  time.add(1);
-  timeFlag.add(1);
+function addTime() {
+  let milliseconds = Date.now() - lastDateTime;
+  time.add(milliseconds);
+  timeFlag.add(milliseconds);
+  lastDateTime = Date.now();
   updateDisplay();
   updateDisplay(displayFlag, timeFlag);
 }
 
 function resumeSwitch() {
+  shineAllDisplay("#b3d8f5");
   if (timerInterval) return stop();
-
-  shineDisplay("#b3d8f5");
-  timerInterval = setInterval(addSecond, 1000);
+  lastDateTime = Date.now();
+  timerInterval = setInterval(addTime, 10);
 
   document.querySelector("#resume-button").textContent = "Stop";
 }
 
 function editTimer(actionCode) {
-  const input = String(document.querySelector("#set-time-input").value).split(":");
-  const newTime = new TimeState(parseInt(input[0]), parseInt(input[1]), parseInt(input[2]));
+  const input = String(document.querySelector("#set-time-input").value).split(
+    ":"
+  );
+  const newTime = new TimeState(
+    parseInt(input[0]),
+    parseInt(input[1]),
+    parseInt(input[2])
+  );
   switch (actionCode) {
     case "set":
       time = newTime;
       break;
     case "add":
-      time.addObj(newTime);
-      timeFlag.addObj(newTime);
+      time.addByObj(newTime);
+      timeFlag.addByObj(newTime);
       break;
-  
+
     default:
       console.warn("Action code is invalid");
       return;
   }
-  updateDisplay()
-  updateDisplay(displayFlag, timeFlag)
+  updateDisplay();
+  updateDisplay(displayFlag, timeFlag);
 }
 
 function stop() {
-  shineDisplay("#b3d8f5");
   clearInterval(timerInterval);
   timerInterval = null;
 
@@ -153,12 +189,16 @@ function stop() {
 
 function reset() {
   if (
+    doWarns &&
+    // TODO: use window.open() with specific modal for do not show again confirmations
     !confirm(
       "ALERTA: Isso irá apagar permanentemente os dados da sessão atual!" +
         "\n\nOK para continuar"
     )
   )
     return;
+
+  shineAllDisplay("#b3d8f5", "#ffa200");
   stop();
   time.reset();
   timeFlag.reset();
@@ -167,6 +207,10 @@ function reset() {
   timeFlags.length = 0;
   document.querySelector("#flags").innerHTML = "";
   document.querySelector("#resume-button").textContent = "Start";
+}
+
+function warnSwitch() {
+  doWarns = !document.querySelector("#dont-warn").checked;
 }
 
 function flag() {
@@ -233,12 +277,20 @@ function getSession(sessionId, isGettingAll = false) {
 
 function load(sessionId) {
   if (
+    doWarns &&
     !confirm(
       "ALERTA: Carregar dados salvos irá apagar permanentemente os dados da sessão atual!\n\n" +
         "OK para continuar"
     )
   )
     return;
+
+  {
+    const doWarnsBackup = doWarns;
+    doWarns = false;
+    reset();
+    doWarns = doWarnsBackup;
+  }
 
   const session = getSession(sessionId);
 
@@ -248,9 +300,9 @@ function load(sessionId) {
   }
   console.log("Current session: " + session);
 
-  time = new TimeState(session.time);
-  timeFlag = new TimeState(session.timeFlag);
-  timeFlags = session.timeFlags.map((elem) => new TimeState(elem));
+  time = TimeState.newByObj(session.time);
+  timeFlag = TimeState.newByObj(session.timeFlag);
+  timeFlags = session.timeFlags.map((elem) => TimeState.newByObj(elem));
 
   document.querySelector("#flags").innerHTML = session.flagsContent;
 

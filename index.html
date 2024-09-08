@@ -41,6 +41,10 @@
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
+                </li> 
+                <li class="nav-item">
+                    <input type="checkbox" name="dont-warn" id="dont-warn" onchange="warnSwitch()">
+                    <label for="dont-warn">Disable Warnings</label>
                 </li>
             </ul>
         </div>
@@ -49,35 +53,37 @@
         <main class="section-content">
             <h1 class="bold">Timer</h1>
             <div class="display-timer">
-                <span id="time" class="bold">
+                <span id="time" class="timer-text bold">
                     <span class="hours number-time font-digit">00</span>h
                     <span class="minutes number-time font-digit">:00</span>m
                     <span class="seconds number-time font-digit">:00</span>s
+                    <span class="milliseconds number-time font-digit">:00</span>ms
                 </span>
             </div>
-            <div class="buttons">
+            <div class="actions child-marg1">
                 <button class="main-timer-button" id="resume-button" type="button"
                     onclick="resumeSwitch()">Start</button>
                 <button class="main-timer-button" type="button" onclick="reset()">Reset</button>
                 <button class="main-timer-button" type="button" onclick="flag()">Flag</button>
             </div>
-            <div class="buttons">
-                <button class="main-timer-button" type="button" onclick="save()">Save</button>
-                <button class="main-timer-button" type="button" onclick="load()">Load</button>
-            </div>
-            <div class="inputs">
+            <div class="actions child-marg1">
                 <input type="time" step="1" value="00:00:00" name="" id="set-time-input">
                 <button class="main-timer-button" type="button" onclick="editTimer('set')">Set Timer</button>
                 <button class="main-timer-button" type="button" onclick="editTimer('add')">Add to Timer</button>
+            </div>
+            <div class="actions child-marg1">
+                <button class="main-timer-button" type="button" onclick="save()">Save</button>
+                <button class="main-timer-button" type="button" onclick="load()">Load</button>
             </div>
         </main>
         <section class="section-content">
             <h3 class="bold">Current Iteration Timer</h3>
             <div id="display-last-flag" class="display-timer">
-                <span id="time-last-flag" class="bold">
+                <span id="time-last-flag" class="timer-text bold">
                     <span class="hours flag number-time font-digit">00</span>h
                     <span class="minutes flag number-time font-digit">:00</span>m
                     <span class="seconds flag number-time font-digit">:00</span>s
+                    <span class="milliseconds flag number-time font-digit">:00</span>ms
                 </span>
             </div>
             <div id="flags"></div>

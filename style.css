@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: "Digitalis";
     src: url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.eot");
     src: url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.eot?#iefix")format("embedded-opentype"),
@@ -6,18 +6,19 @@
     url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.woff")format("woff"),
     url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.ttf")format("truetype"),
     url("https://db.onlinewebfonts.com/t/61597ddaad9f59096e6a6ba33913655e.svg#Digitalis")format("svg");
-}
+} */
 
 @font-face {
     font-family: clockicons;
-    src: url(assets/ds_digital/DS-DIGI.TTF) format("truetype");
+    src: url(assets/ds_digital/DS-Digital.ttf) format("truetype");
     font-weight: 400;
-    font-style: normal
+    font-style: normal;
 }
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -28,13 +29,22 @@ body {
 }
 
 #body-content {
+    height: 80vh;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: space-around;
+    flex-wrap: nowrap;
 }
 
+@media (max-width: 900px) {
+    #body-content {
+        flex-wrap: wrap; /* Só permite empilhamento em telas pequenas */
+    }
+}
+
+
 .section-content {
-    min-width: 50vw;
+    min-width: 45vw;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,13 +55,18 @@ body {
     margin: 1rem;
 }
 
-button {
+button, input {
     border-radius: 1rem;
     padding: 0.5rem 1rem;
-
     color: #fff;
     background-color: #333;
     border: 0.25rem outset #fff;
+}
+
+input {
+    color: #333;
+    background-color: transparent;
+    border-color: #333;
 }
 
 button:hover {
@@ -60,8 +75,18 @@ button:hover {
     transition-duration: 300ms;
 }
 
-button:active {
-    border: 0.25rem inset #fff;
+button:active, input:active {
+    border-style: inset;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.marg1, .child-marg1 > * {
+    margin: 0 0.25rem;
 }
 
 .main-timer-button {
@@ -73,11 +98,15 @@ button:active {
     justify-content: center;
     align-items: center;
     
-    width: 20rem;
+    width: 25rem;
     padding: 0 1rem;
     background-color: black;
     border: .5rem double rgb(100, 100, 100);
     border-radius: 1rem;
+}
+
+.display-timer > * {
+    color: #b3d8f5;
 }
 
 .flag.number-time {
@@ -85,17 +114,13 @@ button:active {
 }
 
 #display-last-flag {
-    width: 15rem;
+    width: 20rem;
     background-color: #555;
     border-color: #aaa;
 }
 
 #display-last-flag > * {
     font-size: 1rem;
-}
-
-.display-timer > * {
-    color: #b3d8f5;
 }
 
 .font-digit {
@@ -115,7 +140,9 @@ button:active {
     justify-content: center;
     align-items: center;
     min-width: 15rem;
+    max-width: 20rem;
     margin: 0.5rem 0.25rem;
+    flex-shrink: 0;
 }
 
 .flags > .number-time {
@@ -136,8 +163,8 @@ button:active {
 }
 
 #flags {
-    width: 80%;
-    height: 10rem;
+    max-width: 80%;
+    height: auto;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
