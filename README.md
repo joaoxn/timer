@@ -15,7 +15,7 @@ This piece of software lets you keep track of how much time has been elapsed sin
 
 ## Use Cases
 
-While running, use to keep track of the time spent on each lap's time, the best and worse time, and the total time;  
+While running, use to keep track of the time spent on each lap, the best and worse time, and the total time;  
 While gaming, use to keep track of the time spent on each run, the best and worse time, and the total time;  
 While coding, use to keep track of the time spent on each commit, the best and worse time, and the total time;  
 
