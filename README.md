@@ -1,16 +1,16 @@
 # Timer
 
-> **Timer is currently live at [this URL](https://joaoxn.github.io/timer/) on GitHub Pages.**
+- **Timer is currently live at [this URL](https://joaoxn.github.io/timer/) on GitHub Pages.**
 
 Timer is a time management tool for measuring time efficiently.
 This piece of software lets you keep track of how much time has been elapsed since the start of the timer, whilst keeping track of incomming flaggable iterations.
 
 ## How to Use
 
-> Start, stop and resume to change the state of the clock;
-> Flag to add elapsed time to iterations tab;
-> Set or add custom timing to adjust the timer to your preferred state;
-> Save and load to keep the current clock info across multiple uses. This will save data into your browser's `localstorage`. Switching browsers or cleaning data may clear saved data.
+- Start, stop and resume to change the state of the clock;
+- Flag to add elapsed time to iterations tab;
+- Set or add custom timing to adjust the timer to your preferred state;
+- Save and load to keep the current clock info across multiple uses. This will save data into your browser's `localstorage`. Switching browsers or cleaning data may clear saved data.
 
 ## Use Cases
 
