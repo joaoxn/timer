@@ -11,7 +11,7 @@ This piece of software lets you keep track of how much time has been elapsed sin
 - Flag to add elapsed time to iterations tab;
 - Check the iterations tab to obtain information about past iterations, including the fastest and slowest time, as well as the number and time of each iteration;
 - Set or add custom timing to adjust the timer to your preferred state;
-- Save and load to keep the current clock info across multiple uses. This will save data into your browser's `localstorage`. Switching browsers or cleaning data may clear saved data.
+- Save and load to keep the current clock info across multiple uses. This will save data into your browser's `localstorage`. Switching browsers or cleaning data may erase saved data.
 
 ## Use Cases
 
